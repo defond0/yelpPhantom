@@ -9,6 +9,7 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var controllers = require('./controllers');
 
 var app = express();
 
@@ -29,12 +30,29 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function(req,res,next){
-
-    next();
+    var phantom = require('node-phantom');
+    if(typeof(req.query._escaped_fragment_)!=='undefined'){
+        console.log('ding');
+        phantom.create(function(err,ph){
+            return ph.createPage(function(err,page){
+                return page.open('https://localhost:3000/#!'+req.query._escaped_fragment_,function(status){
+                    return page.evaluate((function(){
+                        return document.getElementsbyTagName('html')[0].innerHTML;
+                    }),function(err,result){
+                        console.log(result);
+                        res.render(result);
+                        return ph.exit();
+                    });
+                });
+            });
+        });
+    }
+    else{
+        console.log('ping');
+        controllers.home.index(req,res,next);
+    }
 })
 
-app.use('/', routes);
-app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
