@@ -1,0 +1,19 @@
+{
+  "name": "yelpPhantom",
+  "version": "0.0.0",
+  "homepage": "https://github.com/defond0/yelpPhantom",
+  "authors": [
+    "Jeff DeFond <jeffdefond@gmail.com>"
+  ],
+  "main": "app.js",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+  }
+}

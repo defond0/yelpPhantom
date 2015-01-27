@@ -1,0 +1,14 @@
+<h1>{{title}}</h1>
+    <p> Welcome to {{title}}</p>
+    <div id="wrapper">
+    </div>
+    <script type="text/javascript">
+	    $(document).ready(function(){
+	        var data = {{{toJson rows}}};
+	        content=''
+	        data.forEach(function(val){
+	        	content+='<div class="row"><p>'+val.name+'<p/></div>'
+	        });
+	        $(wrapper).html(content);
+	    });
+    </script>
