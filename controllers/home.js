@@ -1,6 +1,6 @@
 exports.index = function(req, res, next) {
   var tableContent='';
-  var settings = YPSettings;
+  var settings = require(__baseDir + 'settings');
   var config = settings.config;
   var yelpConfig = config.yelp;
   var yelp = require('yelp').createClient({
@@ -10,7 +10,7 @@ exports.index = function(req, res, next) {
 	token_secret:yelpConfig.token_secret
   });
   qs={
-	 location: 'Berkeley'	
+	 location: 'Berkeley'
   };
   yelp.search(qs, function(error,data){
 		res.render('index', { title: 'Yelp Businesses', rows:data.businesses});
