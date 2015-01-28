@@ -1,10 +1,13 @@
 exports.index = function(req, res, next) {
   var tableContent='';
+  var settings = YPSettings;
+  var config = settings.config;
+  var yelpConfig = config.yelp;
   var yelp = require('yelp').createClient({
-	consumer_key:'mSh1xPYtd9iZU8zumUgLig',
-	consumer_secret:'W9-uQLkgP1YryIdb-iobpNe_-40',
-	token:'DTieNpl753_Ak1Ovn34AEyrw1ctaZB4I',
-	token_secret:'0qI2_cscEfRFufU-8-Wao429Dbk'
+	consumer_key: yelpConfig.consumer_key,
+	consumer_secret: yelpConfig.consumer_secret,
+	token:yelpConfig.token,
+	token_secret:yelpConfig.token_secret
   });
   qs={
 	 location: 'Berkeley'	

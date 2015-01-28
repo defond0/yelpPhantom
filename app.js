@@ -10,7 +10,7 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var controllers = require('./controllers');
-
+YPSettings = require('./settings');
 var app = express();
 
 // view engine setup
@@ -31,16 +31,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function(req,res,next){
     var phantom = require('node-phantom');
+    console.log(req.headers['user-agent']);
     if(typeof(req.query._escaped_fragment_)!=='undefined'){
         console.log('ding');
         phantom.create(function(err,ph){
             return ph.createPage(function(err,page){
-                return page.open('https://localhost:3000/#!'+req.query._escaped_fragment_,function(status){
+                return page.open('https://localhost:3000/'+req.query._escaped_fragment_,function(status){
                     return page.evaluate((function(){
                         return document.getElementsbyTagName('html')[0].innerHTML;
                     }),function(err,result){
                         console.log(result);
-                        res.render(result);
+                        res.send(result);
                         return ph.exit();
                     });
                 });
