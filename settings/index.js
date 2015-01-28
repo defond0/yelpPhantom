@@ -1,3 +1,10 @@
 module.exports = {
-	config: require('./config')
-}
+  config: {
+    yelp: {
+      consumer_key: '',
+      consumer_secret: '',
+      token: '',
+      token_secret: ''
+    }
+  }
+};

@@ -1,23 +1,25 @@
-var express = require('express'),
-exphbs  = require('express-handlebars');
-handlebars = require('./adapter/handlebars');
+if (!global.__baseDir) {
+  global.__baseDir = __dirname + '/';
+}
+
+var express = require('express');
+var exphbs  = require('express-handlebars');
+var handlebars = require(__baseDir + 'adapter/handlebars');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
-var routes = require('./routes/index');
-var users = require('./routes/users');
-var controllers = require('./controllers');
-YPSettings = require('./settings');
+var routes = require(__baseDir + 'routes/index');
+var users = require(__baseDir + 'routes/users');
+var controllers = require(__baseDir + 'controllers');
+var phantom = require('node-phantom');
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, './views'));
-app.engine('.html', 
-            exphbs({helpers: handlebars,
-                                defaultLayout: 'main', 
+app.engine('.html', exphbs({helpers: handlebars,
+                                defaultLayout: 'main',
                                 extname: '.html'}));
 app.set('view engine', '.html');
 
@@ -30,7 +32,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function(req,res,next){
-    var phantom = require('node-phantom');
     console.log(req.headers['user-agent']);
     if(typeof(req.query._escaped_fragment_)!=='undefined'){
         console.log('ding');
